@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="ru.uzen.android.theme.Note5"
+          android:versionCode="1"
+          android:versionName="0.1.0">
+
+    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="26"/>
+
+    <application android:label="@string/theme_name"
+	             android:icon="@drawable/theme_icon">
+	             
+        <activity android:exported="false" android:name=".App">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.STHEME"/>
+            </intent-filter>
+        </activity>
+        <meta-data android:name="SPDE.build.signature" android:value="92382/184233/COMMON-single-HD-release"/>
+        <meta-data android:name="SPDE.env.version" android:value="0.12.2/19.1.7/19.2.6"/>
+    </application>
+</manifest>
