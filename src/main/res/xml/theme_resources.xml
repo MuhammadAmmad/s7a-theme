@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Theme version="1">
+    <Label value="@string/theme_name" />
+    <Wallpaper image="home_wallpaper" />
+    <LockScreenWallpaper image="lock_wallpaper" />
+    <ThemePreview image="preview" />
+    <ThemePreviewWork image="preview" />
+    <ThemePreviewMenu image="preview" />
+</Theme>

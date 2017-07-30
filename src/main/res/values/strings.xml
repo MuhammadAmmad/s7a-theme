@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="theme_name">S7A theme</string>
+    <string name="exit">Cancel</string>
+    <string name="apply_icon_theme">Apply Theme</string>
 </resources>
