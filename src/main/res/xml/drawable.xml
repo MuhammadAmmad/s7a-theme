@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <category title="All" />
+    <item drawable="ic_youtube" />
+    <item drawable="ic_spotify" />
+</resources>

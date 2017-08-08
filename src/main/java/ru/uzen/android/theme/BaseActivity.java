@@ -1,10 +1,11 @@
-package ru.uzen.android.theme.Note5;
+package ru.uzen.android.theme;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Gravity;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -14,22 +15,25 @@ import java.util.ArrayList;
 public abstract class BaseActivity extends Activity {
 	public static final int WRAP_CONTENT = LayoutParams.WRAP_CONTENT;
 	public static final int MATCH_PARENT = LayoutParams.MATCH_PARENT;
-	
-    public static final int BTN_APPLY = 0;
-    public static final int BTN_EXIT = 1;
     
     /* ID */
-    private static int CONTENT_LAYOUT_ID = 0x00000000;
-    private static int FOOTER_LAYOUT_ID = 0x00000001;
+    public static final int CONTENT_LAYOUT_ID = 0x00000000;
+    public static final int FOOTER_LAYOUT_ID = 0x00000001;
+    public static final int HEADER_LAYOUT_ID = 0x00000002;
+    public static final int BUTTONS_LAYOUT_ID = 0x10000000;
     
     public static int BUTTONS_MAX_NUM = 2;  
     public static float density = 1;
     
-    private ArrayList<Button> mButtons = new ArrayList<Button>();
+    private ArrayList<Button> mButtons = new ArrayList<Button>(BUTTONS_MAX_NUM);
 
     private RelativeLayout mGlobalLayout;
+    
     private LinearLayout mContentLayout;
     private LinearLayout mFooterLayout;
+    private LinearLayout mHeaderLayout;
+    
+    private TextView mHeaderViewText;
     
     private View mContent;
     
@@ -38,17 +42,13 @@ public abstract class BaseActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
         
-        mButtons = new ArrayList<Button>(BUTTONS_MAX_NUM);
-        
         for (int i = 0; i < BUTTONS_MAX_NUM; i++) {
         	mButtons.add(new Button(this));
         }
         
-        mButtons.get(BTN_APPLY).setText(R.string.apply_icon_theme);
-		mButtons.get(BTN_EXIT).setText(R.string.exit);
-        
         density = getResources().getDisplayMetrics().density;	
 		
+		initHeader();
 		initFooter();
 		initContent();
 		initActivity();
@@ -82,10 +82,23 @@ public abstract class BaseActivity extends Activity {
 		}    
     } 
     
+    private void initHeader() {
+    	mHeaderLayout = new LinearLayout(this);
+    	mHeaderLayout.setId(HEADER_LAYOUT_ID);
+    	mHeaderViewText = new TextView(this);
+    	mHeaderViewText.setTextSize(dp(18));
+    	mHeaderViewText.setTextColor(0xFFD3D3D3);
+    	
+		mHeaderLayout.addView(mHeaderViewText, createLinear(MATCH_PARENT, WRAP_CONTENT, 1, Gravity.LEFT | Gravity.TOP, 16, 16, 16, 16));
+    }
+    
     private void initActivity() {
     	mGlobalLayout = new RelativeLayout(this);
         mGlobalLayout.setBackgroundColor(0xFFFAFAFA); 
         mGlobalLayout.setLayoutParams(createLinear(MATCH_PARENT, MATCH_PARENT));
+        
+        /* add Header Layout */
+        mGlobalLayout.addView(mHeaderLayout, createRelative(MATCH_PARENT, WRAP_CONTENT, RelativeLayout.ALIGN_PARENT_TOP, -1, -1));
 		
 		/* add Footer Layout */
 		mGlobalLayout.addView(mFooterLayout, createRelative(MATCH_PARENT, WRAP_CONTENT, RelativeLayout.ALIGN_PARENT_BOTTOM, -1, -1));
@@ -164,5 +177,25 @@ public abstract class BaseActivity extends Activity {
 			mContentLayout.addView(contentView, createRelative(MATCH_PARENT, WRAP_CONTENT));
 		}
 		mContent = contentView;
+	}
+	
+	public void setHeaderViewText(String text) {
+		setHeaderViewText(text, -1);
+	}
+
+	public void setHeaderViewText(String text, int color) {
+		setHeaderViewText(text, color, -1);
+	}
+
+	public void setHeaderViewText(String text, int color, float size) {
+		if (!mHeaderViewText.equals(text)) {
+			mHeaderViewText.setText(text);
+		}
+		if (color >= 0) {
+			mHeaderViewText.setTextColor(color);
+		}
+		if (size >= 0) {
+			mHeaderViewText.setTextSize(size);
+		}
 	}
 }
